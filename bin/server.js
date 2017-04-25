@@ -1,0 +1,28 @@
+/**
+ * Created by gaojun-pd on 2017/4/25.
+ */
+var app = require('http').createServer(handler),
+    io = require('socket.io').listen(app),
+    fs = require('fs')
+
+app.listen(8080);
+io.set('log level', 1);//将socket.io中的debug信息关闭
+
+function handler (req, res) {
+    fs.readFile(__dirname + '/../views/index.html',function (err, data) {
+        console.log(__dirname + '../views/index.html')
+        if (err) {
+            res.writeHead(500);
+            return res.end('Error loading index.html');
+        }
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.end(data);
+    });
+}
+
+io.sockets.on('connection', function (socket) {
+    socket.emit('news', { hello: 'world' });
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
+});

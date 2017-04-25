@@ -5,12 +5,6 @@ vendor/
 *.map
 #.project
 .settings/
-/*/
-/*
-!/node_modules/
-!.gitignore
-!README
-
 
 # Logs
 logs
